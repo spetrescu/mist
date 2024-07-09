@@ -1,12 +1,13 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from llama import Dialog, Llama
+from llama import Llama
 from typing_extensions import TypedDict
 from typing import List, Optional
 import uvicorn
 import os
 import torch
+from scheduler import Scheduler
 
 app = FastAPI()
 
@@ -49,19 +50,35 @@ async def lifespan(app: FastAPI):
 
 app.router.lifespan_context = lifespan
 
+scheduler = Scheduler(max_workers=4)
+
+def process_dialogs(dialogs, temperature, top_p, max_gen_len):
+    results = generator.chat_completion(
+        dialogs,
+        max_gen_len=max_gen_len,
+        temperature=temperature,
+        top_p=top_p,
+    )
+    return results
+
 @app.post("/chat")
 async def chat(request: DialogRequest):
     try:
-        results = generator.chat_completion(
-            request.dialogs,
-            max_gen_len=request.max_gen_len,
-            temperature=request.temperature,
-            top_p=request.top_p,
+        task = lambda: process_dialogs(
+            request.dialogs, 
+            request.temperature, 
+            request.top_p, 
+            request.max_gen_len
         )
-        return {"results": results}
+        results = scheduler.schedule_tasks([task])
+        return {"results": results[0]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/queue-count")
+async def get_queue_count():
+    return {"queue_count": scheduler.get_queue_counter()}
 
 if __name__ == "__main__":
+    # Initialize generator, set lifespan_context, and run app with uvicorn as before
     uvicorn.run(app, host="0.0.0.0", port=8000)
