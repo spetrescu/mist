@@ -3,7 +3,7 @@ Middleware for LLMs.
 
 <div align="left">
    <p>
-    <img width="210" alt="mist" src="https://github.com/user-attachments/assets/c851e049-6984-4142-87c9-4601fddaf2ec">
+    <img width="200" alt="mist" src="https://github.com/user-attachments/assets/ce44265d-dac4-421c-9b77-583973d63d0b">
    </p>
    <p>
      <a href="">
@@ -11,7 +11,6 @@ Middleware for LLMs.
      </a>
    </p>
  </div>
-
 
 # Setup
 To enable using our system, as a prerequisite, make sure you have a running `memecached` instance. This is required for enabling conversation histories. <br>
