@@ -12,34 +12,47 @@ Middleware for LLMs.
    </p>
  </div>
 
-# Setup
-To enable using our system, as a prerequisite, make sure you have a running `memecached` instance. This is required for enabling conversation histories. <br>
-As a first step, start the server to load the LLM into memory and accept incoming connections from clients.
-```
-python3 server.py
-```
-In a new terminal instance, spawn a new client. For credentials, you can use `user1` and `password1`.
-```
-python3 client.py
-```
+## Features
+- **Conversation History:** Persist and retrieve conversation histories using Memcached.
+- **User Authentication:** Simple user authentication for secure access.
+- **Multiple Client Support:** Supports multiple clients simultaneously with active thread management.
 
-# Test setup
+## Setup
+
+### Prerequisites
+1. **Memcached:** Ensure you have a running `memcached` instance. This is required for enabling conversation histories.
+2. **Python Environment:** Python 3.x is required.
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-repo/mist.git
+cd mist
 ```
+2. Set up a virtual environment:
+```bash
 python3 -m venv mist
-```
-
-```
 source mist/bin/activate
 ```
-
-```
+3. Install the required Python packages:
+```bash
 pip install -e .
 ```
-
-```
-torchrun --nproc_per_node 1 example_chat_completion.py \
-    --ckpt_dir Meta-Llama-3-8B-Instruct/ \
-    --tokenizer_path Meta-Llama-3-8B-Instruct/tokenizer.model \
-    --max_seq_len 512 --max_batch_size 6
+4. Start the Memcached server (if not already running):
+```bash
+memcached -d -m 1024 -l 127.0.0.1 -p 11211
 ```
 
+## Starting the Server
+To start the LLM server and load the model into memory, run:
+```bash
+python3 server_conversation_history_logging.py
+```
+
+## Starting the Client
+In a new terminal instance, start a client session:
+```bash
+python3 client_session_conversation_history.py
+```
+Use the credentials `user1` and `password1` to authenticate.
