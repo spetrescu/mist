@@ -3,7 +3,7 @@ Middleware for LLMs.
 
 <div align="left">
    <p>
-    <img width="200" alt="mist" src="https://github.com/user-attachments/assets/ce44265d-dac4-421c-9b77-583973d63d0b">
+    <img width="180" alt="mist" src="https://github.com/user-attachments/assets/ce44265d-dac4-421c-9b77-583973d63d0b">
    </p>
    <p>
      <a href="">
@@ -27,7 +27,7 @@ Middleware for LLMs.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-repo/mist.git
+git clone https://github.com/spetrescu/mist.git
 cd mist
 ```
 2. Set up a virtual environment:
