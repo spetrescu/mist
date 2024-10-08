@@ -12,6 +12,13 @@ Middleware for LLMs.
    </p>
  </div>
 
+## Roadmap
+- [ ] install on mac using electron app
+- [ ] add abstraction architecture diagram
+- [ ] add middleware for selecting LLM and querying
+- [ ] add middleware for connecting LLM to external tools (workers)
+- [ ] add diagram setup for single LLM multiple workers
+
 ## Features
 - **Conversation History:** Persist and retrieve conversation histories using Memcached.
 - **User Authentication:** Simple user authentication for secure access.
